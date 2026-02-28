@@ -1,0 +1,39 @@
+{
+  "name": "coffe-backend-nodejs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Agustincma/coffe-backend-nodejs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Agustincma/coffe-backend-nodejs/issues"
+  },
+  "homepage": "https://github.com/Agustincma/coffe-backend-nodejs#readme",
+  "description": "",
+  "dependencies": {
+    "@fastify/cors": "^11.2.0",
+    "@fastify/env": "^5.0.3",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.3.1",
+    "fastify": "^5.7.4",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.19.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^25.3.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
+  }
+}
