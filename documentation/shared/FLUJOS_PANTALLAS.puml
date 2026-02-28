@@ -1,0 +1,28 @@
+@startuml
+' Web App (Tienda) - Flujo de gestión de productos
+actor TiendaWeb
+TiendaWeb -> LoginPage : Ingresar credenciales
+LoginPage -> DashboardPage : Acceso exitoso
+DashboardPage -> ProductsPage : Selecciona "Productos"
+ProductsPage -> ProductDetailPage : Ver detalle/editar producto
+ProductDetailPage -> ProductForm : Editar/crear producto
+ProductDetailPage -> StockManagementPage : Gestionar stock
+
+' Mobile App (Usuario) - Flujo de pedido personalizado
+actor UsuarioApp
+UsuarioApp -> LoginPage : Ingresar credenciales
+LoginPage -> QRScannerPage : Acceso exitoso
+QRScannerPage -> HomePage : Escanea QR de mesa
+HomePage -> ProductListPage : Ver productos
+ProductListPage -> ProductDetailPage : Selecciona producto
+ProductDetailPage -> CartPage : Agrega al carrito
+CartPage -> OrderSummaryPage : Revisa pedido
+OrderSummaryPage -> OrderStatusPage : Confirma pedido
+
+' Mobile App (Tienda) - Flujo de corrección rápida de stock
+actor TiendaMovil
+TiendaMovil -> LoginPage : Ingresar credenciales
+LoginPage -> QuickStockPage : Acceso rápido
+QuickStockPage -> ProductListPage : Ver productos
+ProductListPage -> ProductEditPage : Editar stock
+@enduml

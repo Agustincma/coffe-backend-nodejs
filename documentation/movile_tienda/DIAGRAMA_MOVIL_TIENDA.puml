@@ -1,0 +1,30 @@
+@startuml
+' Diagrama ER - Tablas principales para la App Móvil de la Tienda (gestión rápida de stock)
+left to right direction
+
+entity tiendas {
+  *id : UUID
+  nombre : string
+}
+entity productos {
+  *id : UUID
+  nombre : string
+  stock : int
+  habilitado : boolean
+  tienda_id : UUID
+}
+entity archivos {
+  *id : UUID
+  url : string
+  producto_id : UUID
+  tienda_id : UUID
+}
+
+' Relaciones principales
+productos --> tiendas : pertenece
+productos --> archivos : tiene
+
+tiendas --> productos : ofrece
+
+'tablas en común: tiendas, productos, archivos
+@enduml

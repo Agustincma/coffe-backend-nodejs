@@ -1,0 +1,154 @@
+@startuml
+' Diagrama ER lineal y entendible para las tablas principales
+left to right direction
+
+' Notación de relaciones:
+' (uno) -- (muchos)
+' El sentido de la flecha indica la dependencia principal (de izquierda a derecha)
+
+entity usuarios {
+  *id : UUID
+  nombre : string
+  email : string
+  password : string
+  rol : enum
+  fecha_creacion : timestamp
+}
+
+entity tiendas {
+  *id : UUID
+  nombre : string
+  qr : string
+  direccion : string
+  fecha_creacion : timestamp
+}
+
+entity mesas {
+  *id : UUID
+  numero : int
+  qr : string
+  tienda_id : UUID
+}
+
+entity productos {
+  *id : UUID
+  nombre : string
+  descripcion : string
+  precio : decimal
+  stock : int
+  habilitado : boolean
+  tienda_id : UUID
+  fecha_creacion : timestamp
+}
+
+entity pedidos {
+  *id : UUID
+  usuario_id : UUID
+  tienda_id : UUID
+  mesa_id : UUID
+  estado : enum
+  total : decimal
+  fecha : timestamp <<fecha creación>>
+  fecha_cancelacion : timestamp <<fecha cancelación>>
+}
+
+entity pedidos_productos {
+  pedido_id : UUID
+  producto_id : UUID
+  cantidad : int
+  personalizacion : string
+}
+
+entity pagos {
+  *id : UUID
+  pedido_id : UUID
+  usuario_id : UUID
+  monto : decimal
+  estado : enum
+  fecha : timestamp <<fecha pago>>
+}
+
+entity devoluciones {
+  *id : UUID
+  pago_id : UUID
+  pedido_id : UUID
+  usuario_id : UUID
+  monto : decimal
+  estado : enum
+  fecha : timestamp <<fecha devolución>>
+}
+
+entity comentarios {
+  *id : UUID
+  usuario_id : UUID
+  producto_id : UUID
+  texto : string
+  fecha : timestamp <<fecha comentario>>
+}
+
+entity puntuaciones {
+  *id : UUID
+  usuario_id : UUID
+  producto_id : UUID
+  valor : int
+}
+
+entity descuentos {
+  *id : UUID
+  producto_id : UUID
+  categoria : string
+  porcentaje : int
+  activo : boolean
+  fecha_inicio : timestamp <<inicio>>
+  fecha_fin : timestamp <<fin>>
+}
+
+entity mensajes {
+  *id : UUID
+  usuario_id : UUID
+  tienda_id : UUID
+  producto_id : UUID
+  texto : string
+  fecha : timestamp <<fecha mensaje>>
+}
+
+entity archivos {
+  *id : UUID
+  url : string
+  tipo : string
+  producto_id : UUID
+  tienda_id : UUID
+  fecha_subida : timestamp <<fecha subida>>
+}
+
+usuarios --> pedidos : Un usuario realiza muchos pedidos
+pedidos --> pedidos_productos : Un pedido contiene muchos productos
+pedidos --> pagos : Un pedido genera uno o más pagos
+pagos --> devoluciones : Un pago puede generar una devolución
+pedidos --> devoluciones : Un pedido puede generar una devolución
+pedidos_productos --> productos : Un producto puede estar en muchos pedidos
+usuarios --> comentarios : Un usuario escribe muchos comentarios
+usuarios --> puntuaciones : Un usuario califica muchos productos
+usuarios --> mensajes : Un usuario envía muchos mensajes
+usuarios --> pagos : Un usuario realiza muchos pagos
+usuarios --> devoluciones : Un usuario recibe muchas devoluciones
+tiendas --> mesas : Una tienda tiene muchas mesas
+tiendas --> productos : Una tienda ofrece muchos productos
+tiendas --> pedidos : Una tienda recibe muchos pedidos
+tiendas --> mensajes : Una tienda recibe muchos mensajes
+tiendas --> archivos : Una tienda almacena muchos archivos
+tiendas --> descuentos : Una tienda aplica muchos descuentos
+mesas --> pedidos : Una mesa recibe muchos pedidos
+productos --> comentarios : Un producto recibe muchos comentarios
+productos --> puntuaciones : Un producto recibe muchas puntuaciones
+productos --> descuentos : Un producto tiene muchos descuentos
+productos --> archivos : Un producto tiene muchos archivos
+
+' Orden lineal de flujo principal
+usuarios --> pedidos : crea
+pedidos --> pedidos_productos : incluye
+pedidos --> pagos : paga
+pagos --> devoluciones : puede devolver
+
+' Fechas destacadas en los campos relevantes
+@enduml
