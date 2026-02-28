@@ -1,0 +1,11 @@
+@startuml
+actor UsuarioApp
+UsuarioApp -> LoginPage : Ingresar credenciales
+LoginPage -> QRScannerPage : Acceso exitoso
+QRScannerPage -> HomePage : Escanea QR de mesa
+HomePage -> ProductListPage : Ver productos
+ProductListPage -> ProductDetailPage : Selecciona producto
+ProductDetailPage -> CartPage : Agrega al carrito
+CartPage -> OrderSummaryPage : Revisa pedido
+OrderSummaryPage -> OrderStatusPage : Confirma pedido
+@enduml

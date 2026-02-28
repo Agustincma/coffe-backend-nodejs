@@ -1,0 +1,7 @@
+@startuml
+actor TiendaMovil
+TiendaMovil -> LoginPage : Ingresar credenciales
+LoginPage -> QuickStockPage : Acceso rápido
+QuickStockPage -> ProductListPage : Ver productos
+ProductListPage -> ProductEditPage : Editar stock
+@enduml

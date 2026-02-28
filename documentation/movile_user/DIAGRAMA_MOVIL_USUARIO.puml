@@ -1,0 +1,55 @@
+@startuml
+' Diagrama ER - Tablas principales para la App Móvil del Usuario
+left to right direction
+
+entity usuarios {
+  *id : UUID
+  nombre : string
+}
+entity pedidos {
+  *id : UUID
+  usuario_id : UUID
+  tienda_id : UUID
+  mesa_id : UUID
+  estado : enum
+  total : decimal
+  fecha : timestamp
+}
+entity productos {
+  *id : UUID
+  nombre : string
+  precio : decimal
+  stock : int
+  tienda_id : UUID
+}
+entity mesas {
+  *id : UUID
+  numero : int
+  tienda_id : UUID
+}
+entity comentarios {
+  *id : UUID
+  usuario_id : UUID
+  producto_id : UUID
+  texto : string
+  fecha : timestamp
+}
+entity puntuaciones {
+  *id : UUID
+  usuario_id : UUID
+  producto_id : UUID
+  valor : int
+}
+
+' Relaciones principales
+usuarios --> pedidos : crea
+usuarios --> comentarios : comenta
+usuarios --> puntuaciones : califica
+pedidos --> productos : incluye
+pedidos --> mesas : desde
+productos --> comentarios : recibe
+productos --> puntuaciones : recibe
+mesas --> pedidos : recibe
+
+' Tablas en común con otras apps: usuarios, productos, pedidos, comentarios, puntuaciones, mesas
+@enduml
